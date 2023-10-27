@@ -1,17 +1,20 @@
 package com.xavero.jobs_manager.modules.candidate.controllers
 
 import com.xavero.jobs_manager.modules.candidate.entities.CandidateEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import jakarta.validation.Valid
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/candidate")
+@RequestMapping("/api/v1/candidate")
 class CandidateController {
 
-    @PostMapping("/")
-    fun create(@RequestBody candidateEntity: CandidateEntity) {
+    @PostMapping("")
+    fun create(@Valid @RequestBody candidateEntity: CandidateEntity) {
         println(candidateEntity.email)
+    }
+
+    @GetMapping("")
+    fun read() {
+        println("read")
     }
 }
