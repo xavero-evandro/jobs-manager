@@ -1,19 +1,28 @@
 package com.xavero.jobs_manager.modules.candidate.controllers
 
-import com.xavero.jobs_manager.modules.candidate.entities.CandidateEntity
-import jakarta.validation.Valid
+import com.xavero.jobs_manager.modules.candidate.entities.Candidate
+import com.xavero.jobs_manager.modules.candidate.useCases.CreateCandidateUseCase
+import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/candidate")
-class CandidateController {
+class CandidateController(private val createCandidateUseCase: CreateCandidateUseCase) {
 
-    @PostMapping("")
-    fun create(@Valid @RequestBody candidateEntity: CandidateEntity) {
-        println(candidateEntity.email)
+    @PostMapping
+    fun create(@Validated @RequestBody candidateEntity: Candidate): ResponseEntity<Any> {
+        try {
+            val result = createCandidateUseCase.execute(candidateEntity)
+            return ResponseEntity.ok(result)
+        } catch (err: Exception) {
+            return ResponseEntity.badRequest().body(object {
+                val message = err.message
+            })
+        }
     }
 
-    @GetMapping("")
+    @GetMapping
     fun read() {
         println("read")
     }

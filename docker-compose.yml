@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: job-manager-postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: xavero
+      POSTGRES_PASSWORD: xavero
+      POSTGRES_DB: job_manager
+    ports:
+      - 5432:5432
